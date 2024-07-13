@@ -7,7 +7,7 @@ import { DEMO_VALUES } from './components/constants';
 function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [dynamicText, setDynamicText] = useState('{{wf {value 3} }}');
+  const [dynamicText, setDynamicText] = useState('{{wf {value 1} }} is here {{wf {value 5} }}');
   const [age, setAge] = useState('');
 
   const handleDynamicText = (value: string) => {
