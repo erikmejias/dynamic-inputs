@@ -21,6 +21,10 @@ const WidgetPlugin = ViewPlugin.fromClass(
         this.decorations = createDecorations(update.view);
       }
     }
+
+    getDecorations() {
+      return this.decorations;
+    }
   },
   {
     decorations: (v) => v.decorations,
