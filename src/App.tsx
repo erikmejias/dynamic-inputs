@@ -8,6 +8,12 @@ function App() {
   const [dynamicText, setDynamicText] = useState('');
   const [age, setAge] = useState('');
 
+  const handleDynamicText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    console.log(value);
+    setDynamicText(value);
+  }
+
   return (
     <div id="root">
       <form>
@@ -21,7 +27,7 @@ function App() {
         </div>
         <div className="field-group">
           <label>Dynamic Text:</label>
-          <input className='input' type="text" value={dynamicText} onChange={(e) => setDynamicText(e.target.value)} />
+          <input className='input' type="text" value={dynamicText} onChange={handleDynamicText} />
         </div>
         <div className="field-group">
           <label>Age:</label>
