@@ -5,38 +5,41 @@ import {
   ViewPlugin,
   ViewUpdate,
 } from "@codemirror/view";
-import { DEMO_VALUES } from "./constants";
 import ValueWidget from "./ValueWidget";
 
-const WidgetPlugin = ViewPlugin.fromClass(
-  class {
-    decorations: DecorationSet;
+const WidgetPlugin = (collectionData: string[]) =>
+  ViewPlugin.fromClass(
+    class {
+      decorations: DecorationSet;
 
-    constructor(view: EditorView) {
-      this.decorations = createDecorations(view);
-    }
-
-    update(update: ViewUpdate) {
-      if (update.docChanged) {
-        this.decorations = createDecorations(update.view);
+      constructor(view: EditorView) {
+        this.decorations = createDecorations(view, collectionData);
       }
-    }
 
-    getDecorations() {
-      return this.decorations;
-    }
-  },
-  {
-    decorations: (v) => v.decorations,
-  }
-);
+      update(update: ViewUpdate) {
+        if (update.docChanged) {
+          this.decorations = createDecorations(update.view, collectionData);
+        }
+      }
 
-function createDecorations(view: EditorView): DecorationSet {
+      getDecorations() {
+        return this.decorations;
+      }
+    },
+    {
+      decorations: (v) => v.decorations,
+    }
+  );
+
+function createDecorations(
+  view: EditorView,
+  collectionData: string[]
+): DecorationSet {
   const widgets: Array<{ from: number; to: number; deco: Decoration }> = [];
 
   for (const { from, to } of view.visibleRanges) {
     const text = view.state.doc.sliceString(from, to);
-    for (const value of DEMO_VALUES) {
+    for (const value of collectionData) {
       let pos = 0;
       while ((pos = text.indexOf(value, pos)) > -1) {
         const start = from + pos;

@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import EditableInput from './components/EditableInput';
+import { DEMO_VALUES } from './components/constants';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
         </div>
         <div className="field-group">
           <label>Dynamic Text:</label>
-          <EditableInput value={dynamicText} onChange={handleDynamicText} />
+          <EditableInput value={dynamicText} onChange={handleDynamicText} collectionData={DEMO_VALUES} />
         </div>
         <div className="field-group">
           <label>Age:</label>

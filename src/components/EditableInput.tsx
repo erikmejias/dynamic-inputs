@@ -8,10 +8,11 @@ import WidgetPlugin from './WidgetPlugin';
 interface EditableInputProps {
   value: string;
   onChange: (value: string) => void;
+  collectionData: string[];
 }
 
 
-function EditableInput({ value, onChange }: EditableInputProps) {
+function EditableInput({ value, onChange, collectionData }: EditableInputProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
@@ -27,7 +28,7 @@ function EditableInput({ value, onChange }: EditableInputProps) {
               onChange(update.state.doc.toString());
             }
           }),
-          WidgetPlugin
+          WidgetPlugin(collectionData)
         ],
       });
 
