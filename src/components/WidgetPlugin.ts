@@ -23,13 +23,13 @@ const WidgetPlugin = (
           this.decorations = createDecorations(update.view, collectionData);
         }
       }
-
-      getDecorations() {
-        return this.decorations;
-      }
     },
     {
       decorations: (v) => v.decorations,
+      provide: (plugin) =>
+        EditorView.atomicRanges.of((view) => {
+          return view.plugin(plugin)?.decorations || Decoration.none;
+        }),
     }
   );
 
@@ -51,6 +51,7 @@ function createDecorations(
           to: end,
           deco: Decoration.replace({
             widget: new ValueWidget(display, collectionData, view, start, end),
+            inclusive: true,
           }),
         });
         pos = end;
