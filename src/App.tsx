@@ -1,15 +1,15 @@
 import './App.css';
 import React, { useState } from 'react';
+import EditableInput from './components/EditableInput';
 
 
 function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [dynamicText, setDynamicText] = useState('');
+  const [dynamicText, setDynamicText] = useState('initial...');
   const [age, setAge] = useState('');
 
-  const handleDynamicText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleDynamicText = (value: string) => {
     console.log(value);
     setDynamicText(value);
   }
@@ -27,7 +27,7 @@ function App() {
         </div>
         <div className="field-group">
           <label>Dynamic Text:</label>
-          <input className='input' type="text" value={dynamicText} onChange={handleDynamicText} />
+          <EditableInput value={dynamicText} onChange={handleDynamicText} />
         </div>
         <div className="field-group">
           <label>Age:</label>
