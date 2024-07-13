@@ -46,11 +46,20 @@ function createDecorations(
         const end = start + value.length;
         const match = value.match(/\{([^{}]+)\}/);
         if (match) {
+          const options = collectionData.map(
+            (v) => v.match(/\{([^{}]+)\}/)?.[1].trim() || ""
+          );
           widgets.push({
             from: start,
             to: end,
             deco: Decoration.replace({
-              widget: new ValueWidget(match[1].trim()),
+              widget: new ValueWidget(
+                match[1].trim(),
+                options,
+                view,
+                start,
+                end
+              ),
             }),
           });
         }
