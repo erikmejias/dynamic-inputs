@@ -6,7 +6,7 @@ import EditableInput from './components/EditableInput';
 function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [dynamicText, setDynamicText] = useState('initial...');
+  const [dynamicText, setDynamicText] = useState('');
   const [age, setAge] = useState('');
 
   const handleDynamicText = (value: string) => {
