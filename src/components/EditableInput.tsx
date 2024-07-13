@@ -8,9 +8,8 @@ import WidgetPlugin from './WidgetPlugin';
 interface EditableInputProps {
   value: string;
   onChange: (value: string) => void;
-  collectionData: string[];
+  collectionData: Array<{ display: string; value: string }>;
 }
-
 
 function EditableInput({ value, onChange, collectionData }: EditableInputProps) {
   const editorRef = useRef<HTMLDivElement>(null);

@@ -7,7 +7,9 @@ import {
 } from "@codemirror/view";
 import ValueWidget from "./ValueWidget";
 
-const WidgetPlugin = (collectionData: string[]) =>
+const WidgetPlugin = (
+  collectionData: Array<{ display: string; value: string }>
+) =>
   ViewPlugin.fromClass(
     class {
       decorations: DecorationSet;
@@ -33,36 +35,24 @@ const WidgetPlugin = (collectionData: string[]) =>
 
 function createDecorations(
   view: EditorView,
-  collectionData: string[]
+  collectionData: Array<{ display: string; value: string }>
 ): DecorationSet {
   const widgets: Array<{ from: number; to: number; deco: Decoration }> = [];
 
   for (const { from, to } of view.visibleRanges) {
     const text = view.state.doc.sliceString(from, to);
-    for (const value of collectionData) {
+    for (const { display, value } of collectionData) {
       let pos = 0;
       while ((pos = text.indexOf(value, pos)) > -1) {
         const start = from + pos;
         const end = start + value.length;
-        const match = value.match(/\{([^{}]+)\}/);
-        if (match) {
-          const options = collectionData.map(
-            (v) => v.match(/\{([^{}]+)\}/)?.[1].trim() || ""
-          );
-          widgets.push({
-            from: start,
-            to: end,
-            deco: Decoration.replace({
-              widget: new ValueWidget(
-                match[1].trim(),
-                options,
-                view,
-                start,
-                end
-              ),
-            }),
-          });
-        }
+        widgets.push({
+          from: start,
+          to: end,
+          deco: Decoration.replace({
+            widget: new ValueWidget(display, collectionData, view, start, end),
+          }),
+        });
         pos = end;
       }
     }
