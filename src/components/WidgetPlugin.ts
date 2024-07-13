@@ -6,6 +6,7 @@ import {
   ViewUpdate,
 } from "@codemirror/view";
 import { DEMO_VALUES } from "./constants";
+import ValueWidget from "./ValueWidget";
 
 const WidgetPlugin = ViewPlugin.fromClass(
   class {
@@ -36,17 +37,16 @@ function createDecorations(view: EditorView): DecorationSet {
       while ((pos = text.indexOf(value, pos)) > -1) {
         const start = from + pos;
         const end = start + value.length;
-        widgets.push({
-          from: start,
-          to: end,
-          deco: Decoration.mark({
-            class: "cm-demo-value",
-            attributes: {
-              style:
-                "background-color: red; color: white; border-radius: 4px; padding: 2px 4px;",
-            },
-          }),
-        });
+        const match = value.match(/\{([^{}]+)\}/);
+        if (match) {
+          widgets.push({
+            from: start,
+            to: end,
+            deco: Decoration.replace({
+              widget: new ValueWidget(match[1].trim()),
+            }),
+          });
+        }
         pos = end;
       }
     }
