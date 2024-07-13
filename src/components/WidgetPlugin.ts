@@ -68,6 +68,9 @@ function createDecorations(
     }
   }
 
+  // Sort widgets by their 'from' position
+  widgets.sort((a, b) => a.from - b.from);
+
   return Decoration.set(widgets.map((w) => w.deco.range(w.from, w.to)));
 }
 
