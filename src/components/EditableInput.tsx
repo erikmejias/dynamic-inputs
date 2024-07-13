@@ -3,11 +3,13 @@ import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
+import WidgetPlugin from './WidgetPlugin';
 
 interface EditableInputProps {
   value: string;
   onChange: (value: string) => void;
 }
+
 
 function EditableInput({ value, onChange }: EditableInputProps) {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -25,6 +27,7 @@ function EditableInput({ value, onChange }: EditableInputProps) {
               onChange(update.state.doc.toString());
             }
           }),
+          WidgetPlugin
         ],
       });
 
